@@ -14,8 +14,7 @@ const environments = {
     // Entorno predeterminado para trabajar en el día a día       
     dev: {
         PORT,
-        db_uri: `mongodb://db:27017/${process.env.MONGO_DB_NAME}`
-        // db_uri: `mongodb+srv://${MONGO_ATLAS_USER}:${MONGO_ATLAS_PASSWORD}@madea.j9vdi.mongodb.net/development?retryWrites=true&w=majority`
+        db_uri: `mongodb+srv://${MONGO_ATLAS_USER}:${MONGO_ATLAS_PASSWORD}@madea.j9vdi.mongodb.net/development?retryWrites=true&w=majority`
     },
     // Contiene los datos reales de nuestros usuarios/clientes
     production: {
@@ -23,7 +22,5 @@ const environments = {
         db_uri: `mongodb+srv://${MONGO_ATLAS_USER}:${MONGO_ATLAS_PASSWORD}@madea.j9vdi.mongodb.net/MasterEnCode?retryWrites=true&w=majority`
     },
 }
-
-console.log('NODE_ENV:', NODE_ENV);
 
 module.exports = environments[NODE_ENV]
