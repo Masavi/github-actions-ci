@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "test": "jest --verbose --watchAll --detectOpenHandles"
+    "test": "jest --verbose --forceExit --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
