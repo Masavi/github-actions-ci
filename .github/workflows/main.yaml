@@ -1,0 +1,33 @@
+# Nombre de mi configuración
+name: Node NoSQL API v1
+
+# Eventos que detonarán el flujo de CI
+on: [push]
+
+# Las tareas que va a ejecutar el flujo de CI
+jobs:
+
+  # Tarea para compilar el proyecto
+  build:
+
+    # Define sobre qué sistema operativo va a compilarse el proyecto
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2 # version de github actions que usaremos
+      - name: Build Docker image # nombramos este proceso de build
+        run: docker build . --file Dockerfile --tag nosql-api-v1 # ejecutamos comandos
+
+  # Tarea para ejecutar los tests del proyecto
+  test:
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: API Tests
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - run: npm ci
+      - run: npm test
+      
