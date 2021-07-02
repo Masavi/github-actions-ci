@@ -23,6 +23,4 @@ const environments = {
     },
 }
 
-console.log('NODE_ENV:', NODE_ENV);
-
 module.exports = environments[NODE_ENV]
