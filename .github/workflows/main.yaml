@@ -1,8 +1,11 @@
 # Nombre de mi configuración
-name: Node NoSQL API v1
+name: Node NoSQL API v2
 
 # Eventos que detonarán el flujo de CI
-on: [push,pull_request]
+on:
+  push:
+    branches:
+      - master
 
 # Las tareas que va a ejecutar el flujo de CI
 jobs:
@@ -14,9 +17,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2 # version de github actions que usaremos
-      - name: Build Docker image # nombramos este proceso de build
-        run: docker build . --file Dockerfile --tag nosql-api-v1 # ejecutamos comandos
+      - uses: actions/checkout@v2
+      - name: Login to Heroku Registry
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login
+      - name: Build & push image
+        run: |
+              docker build . --tag registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web -f docker/prod/Dockerfile
+              docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web
+      - name: Release
+        run: heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} web
 
   # Tarea para ejecutar los tests del proyecto
   test:
